@@ -5,7 +5,7 @@
   
 */
 
-import Ajax from 'folder-ui/lib/db/ajax'
+import AjaxDB from 'folder-ui/lib/db/ajax'
 
 export default function diggerdb(opts = {}){
 
@@ -90,6 +90,6 @@ export default function diggerdb(opts = {}){
     pasteItems
   })
 
-  return Ajax(opts)
+  return AjaxDB(opts)
 
 }
