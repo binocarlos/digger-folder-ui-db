@@ -1,0 +1,33 @@
+{
+  "name": "digger-folder-ui-db",
+  "version": "1.0.0",
+  "description": "folder-ui database for digger-folder-ui backend",
+  "main": "lib/index.js",
+  "scripts": {
+    "compile": "babel -d lib src",
+    "prepublish": "npm run compile"
+  },
+  "bin": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/binocarlos/digger-folder-ui-db.git"
+  },
+  "keywords": [],
+  "author": "Kai Davenport",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/binocarlos/digger-folder-ui-db/issues"
+  },
+  "homepage": "https://github.com/binocarlos/digger-folder-ui-db#readme",
+  "dependencies": {
+    "folder-ui": "^2.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.10.1",
+    "babel-core": "^6.4.5",
+    "babel-loader": "^6.2.1",
+    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-react": "^6.3.13",
+    "babel-preset-stage-1": "^6.3.13"
+  }
+}
