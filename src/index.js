@@ -9,6 +9,8 @@ import AjaxDB from 'folder-ui/lib/db/ajax'
 
 export default function diggerdb(opts = {}){
 
+  const db = AjaxDB(opts)
+
   // database -> reducer
   const encode = (data) => {
     data.id = data._digger.diggerid
@@ -21,7 +23,24 @@ export default function diggerdb(opts = {}){
     return data
   }
 
-  const loadTree = (data) => {
+  const cutProcessor = (data) => {
+    delete(data._digger.path)
+    data._children = (data._children || []).map(cutProcessor)
+    return data
+  }
+
+  const copyProcessor = (data) => {
+    delete(data._digger.inode)
+    delete(data._digger.path)
+    delete(data._digger.diggerid)
+    delete(data._digger.created)
+    data._children = (data._children || []).map(copyProcessor)
+    return data
+  }
+
+  // turn a backend digger tree result (which is a flat list)
+  // into a frontend folder-ui tree
+  const processTreeData = (data) => {
     
     // make a map of _digger.path and _digger.inode
     var pathMap = {}
@@ -58,38 +77,45 @@ export default function diggerdb(opts = {}){
     return rootNodes
   }
 
-  const loadChildren = (data) => {
-    return data.map(encode)
+  return {
+    loadTree:(context, done) => {
+      db.loadTree(context, (err, data) => {
+        if(err) return done(err)
+        done(null, processTreeData(data))
+      })
+    },
+    loadChildren:(context, id, done) => {
+      db.loadChildren(context, id, (err, data) => {
+        if(err) return done(err)
+        done(null, data.map(encode))
+      })
+    },
+    loadDeepChildren:(context, id, done) => {
+      db.loadDeepChildren(context, id, (err, data) => {
+        if(err) return done(err)
+        done(null, processTreeData(data))
+      })
+    },
+    loadItem:(context, id, done) => {
+      db.loadItem(context, id, (err, data) => {
+        if(err) return done(err)
+        done(null, encode(data))
+      })
+    },
+    addItem:(context, parent, item, done) => {
+      db.addItem(context, parent, decode(Object.assign({}, item)), done)
+    },
+    saveItem:(context, id, data, done) => {
+      db.saveItem(context, id, decode(Object.assign({}, data)), done)
+    },
+    deleteItem:(context, id, done) => {
+      db.deleteItem(context, id, done)
+    },
+    filterPaste:(mode, item) => {
+      return mode == 'cut' ? 
+        cutProcessor(item) :
+        copyProcessor(item)
+    }
   }
-
-  const loadItem = (data) => {
-    return encode(data)
-  }
-
-  const addItem = (data) => {
-    return data
-  }
-
-  // remove the top-level id (this is a folder-ui thing)
-  // remove the path based _digger properties
-  const saveItem = (data) => {
-    return decode(Object.assign({}, data))
-  }
-
-  // we don't need a delete it's just the id
-  const pasteItems = (data = []) => {
-    return data.map(d => decode(Object.assign({}, d)))
-  }
-
-  opts.filters = Object.assign({}, opts.mapFns, {
-    loadTree,
-    loadChildren,
-    loadItem,
-    saveItem,
-    addItem,
-    pasteItems
-  })
-
-  return AjaxDB(opts)
 
 }
