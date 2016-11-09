@@ -6,10 +6,13 @@
 */
 
 import AjaxDB from 'folder-ui/lib/db/ajax'
+import urls from 'folder-ui/lib/db/urls'
 
 export default function diggerdb(opts = {}){
 
-  const db = AjaxDB(opts)
+  const db = AjaxDB(Object.assign({}, opts, {
+    urls:urls.digger
+  }))
 
   // database -> reducer
   const encode = (data) => {
