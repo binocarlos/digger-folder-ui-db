@@ -5,14 +5,8 @@
   
 */
 
-import AjaxDB from 'folder-ui/lib/db/ajax'
-import urls from 'folder-ui/lib/db/urls'
-
-export default function diggerdb(opts = {}){
-
-  const db = AjaxDB(Object.assign({}, opts, {
-    urls:urls.digger
-  }))
+// db is an existing folder-ui database implementation
+export default function diggerdb(db, opts = {}){
 
   // database -> reducer
   const encode = (data) => {
@@ -42,7 +36,7 @@ export default function diggerdb(opts = {}){
   }
 
   // turn a backend digger tree result (which is a flat list)
-  // into a frontend folder-ui tree
+  // into a frontend folder-ui tree (which is a nested tree)
   const processTreeData = (data) => {
     
     // make a map of _digger.path and _digger.inode

@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/binocarlos/digger-folder-ui-db#readme",
   "dependencies": {
-    "folder-ui": "^4.3.1"
+    
   },
   "devDependencies": {
     "babel-cli": "^6.10.1",
