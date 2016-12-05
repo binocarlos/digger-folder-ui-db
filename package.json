@@ -1,6 +1,6 @@
 {
   "name": "digger-folder-ui-db",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "description": "folder-ui database for digger-folder-ui backend",
   "main": "lib/index.js",
   "scripts": {
@@ -19,9 +19,7 @@
     "url": "https://github.com/binocarlos/digger-folder-ui-db/issues"
   },
   "homepage": "https://github.com/binocarlos/digger-folder-ui-db#readme",
-  "dependencies": {
-    
-  },
+  "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.10.1",
     "babel-core": "^6.4.5",
