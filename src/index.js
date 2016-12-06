@@ -75,38 +75,38 @@ export default function diggerdb(db, opts = {}){
   }
 
   return {
-    loadTree:(context, done) => {
-      db.loadTree(context, (err, data) => {
+    loadTree:(done) => {
+      db.loadTree((err, data) => {
         if(err) return done(err)
         done(null, processTreeData(data))
       })
     },
-    loadChildren:(context, id, done) => {
-      db.loadChildren(context, id, (err, data) => {
+    loadChildren:(id, done) => {
+      db.loadChildren(id, (err, data) => {
         if(err) return done(err)
         done(null, data.map(encode))
       })
     },
-    loadDeepChildren:(context, id, done) => {
-      db.loadDeepChildren(context, id, (err, data) => {
+    loadDeepChildren:(id, done) => {
+      db.loadDeepChildren(id, (err, data) => {
         if(err) return done(err)
         done(null, processTreeData(data))
       })
     },
-    loadItem:(context, id, done) => {
-      db.loadItem(context, id, (err, data) => {
+    loadItem:(id, done) => {
+      db.loadItem(id, (err, data) => {
         if(err) return done(err)
         done(null, encode(data))
       })
     },
-    addItem:(context, parent, item, done) => {
-      db.addItem(context, parent, decode(Object.assign({}, item)), done)
+    addItem:(parentid, item, done) => {
+      db.addItem(parentid, decode(Object.assign({}, item)), done)
     },
-    saveItem:(context, id, data, done) => {
-      db.saveItem(context, id, decode(Object.assign({}, data)), done)
+    saveItem:(id, data, done) => {
+      db.saveItem(id, decode(Object.assign({}, data)), done)
     },
-    deleteItem:(context, id, done) => {
-      db.deleteItem(context, id, done)
+    deleteItem:(id, done) => {
+      db.deleteItem(id, done)
     },
     filterPaste:(mode, item) => {
       return mode == 'cut' ? 
