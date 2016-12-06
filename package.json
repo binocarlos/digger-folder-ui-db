@@ -1,6 +1,6 @@
 {
   "name": "digger-folder-ui-db",
-  "version": "3.0.0",
+  "version": "4.0.0",
   "description": "folder-ui database for digger-folder-ui backend",
   "main": "lib/index.js",
   "scripts": {
